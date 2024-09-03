@@ -46,7 +46,7 @@
 -->
 
 ### Development
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/React Native for Web-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white">
 
 ### Messaging Framework
 <img src="https://img.shields.io/badge/WebSocket-010101?style=for-the-badge&logo=wprocket&logoColor=white"> <img src="https://img.shields.io/badge/STOMP-000000?style=for-the-badge&logo=stripe&logoColor=white"> <img src="https://img.shields.io/badge/SockJS-000000?style=for-the-badge&logo=socket.io&logoColor=white">
