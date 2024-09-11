@@ -55,7 +55,7 @@
 <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/JWT-004027?style=for-the-badge&logo=jameson&logoColor=white"> <img src="https://img.shields.io/badge/OAuth2.0-113155?style=for-the-badge&logo=authelia&logoColor=white">
 
 ### Development Journal
-<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"> [![Tidal](https://img.shields.io/badge/Tistory-000000?style=for-the-badge&logo=Tistory&logoColor=white)](https://blu-blu.tistory.com) 
+<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"> [![Tidal](https://img.shields.io/badge/Tistory-000000?style=for-the-badge&logo=Tistory&logoColor=white)](https://blu-blu.tistory.com/category/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%F0%9F%A7%B8/CocO%20%F0%9F%90%A4) 
 
 
 ## 주요 기능
