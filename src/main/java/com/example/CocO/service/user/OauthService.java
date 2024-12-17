@@ -215,23 +215,29 @@ public class OauthService {
     // 사용자 정보를 파싱하여 User 객체 생성
     private User parseUserInfo(String userInfo, SocialLoginType socialLoginType, String accessToken) {
         JsonObject jsonObject = JsonParser.parseString(userInfo).getAsJsonObject();
-        String socialId = jsonObject.get("sub").getAsString(); // "sub"는 Google에서 사용자 ID를 나타냄
+
+        // socialId와 name을 소셜 로그인 타입별로 분리
+        String socialId = "";
         String name = "";
 
         if (socialLoginType == SocialLoginType.GOOGLE) {
-            name = jsonObject.get("name").getAsString();  // Google에서 제공하는 name
+            socialId = jsonObject.get("sub").getAsString(); // Google은 "sub"를 ID로 사용
+            name = jsonObject.get("name").getAsString();    // Google에서 제공하는 이름
         } else if (socialLoginType == SocialLoginType.KAKAO) {
-            name = jsonObject.getAsJsonObject("properties").get("nickname").getAsString();  // Kakao에서 제공하는 nickname
+            socialId = jsonObject.get("id").getAsString(); // Kakao는 "id"를 사용자 ID로 사용
+            name = jsonObject.getAsJsonObject("properties").get("nickname").getAsString(); // Kakao에서 제공하는 nickname
         } else if (socialLoginType == SocialLoginType.NAVER) {
-            name = jsonObject.get("name").getAsString();  // Naver에서 제공하는 name
+            JsonObject response = jsonObject.getAsJsonObject("response"); // Naver의 데이터는 response 필드 안에 존재
+            socialId = response.get("id").getAsString();   // Naver는 "id"를 사용자 ID로 사용
+            name = response.get("name").getAsString();     // Naver에서 제공하는 이름
         }
 
         // User 객체에 정보 세팅
         User user = new User();
-        user.setSocialId(socialId); // 소셜 ID 설정
-        user.setName(name);  // 사용자의 이름 설정
-        user.setProvider(socialLoginType.name()); // 로그인 제공자 이름 설정
-        user.setAccessToken(accessToken); // 액세스 토큰 설정
+        user.setSocialId(socialId);             // 소셜 ID 설정
+        user.setName(name);                     // 사용자의 이름 설정
+        user.setProvider(socialLoginType.name()); // 로그인 제공자 설정
+        user.setAccessToken(accessToken);       // 액세스 토큰 설정
         return user;
     }
 
