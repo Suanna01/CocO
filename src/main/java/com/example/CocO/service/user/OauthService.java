@@ -61,12 +61,9 @@ public class OauthService {
 
     // 액세스 토큰을 사용하여 사용자 정보를 가져오고, 사용자 정보가 있으면 저장하는 메서드
     public User requestAccessTokenAndSaveUser(SocialLoginType socialLoginType, String code) {
-        System.out.println("socialLoginType & code : "+ socialLoginType + " \n & \n" + code +"\n********");
-
         // 1. 액세스 토큰을 포함한 JSON 응답을 요청
         String accessTokenJson = this.requestAccessToken(socialLoginType, code);
 
-        System.out.println("\n accesTokenJson : "+ accessTokenJson +"\n********");
         // 2. JSON에서 액세스 토큰만 추출
         String accessToken = extractAccessTokenFromJson(accessTokenJson);
 
@@ -77,8 +74,6 @@ public class OauthService {
 
         // 3. 액세스 토큰을 사용해 사용자 정보 요청
         String userInfo = getUserInfo(socialLoginType, accessToken);
-
-        System.out.println("userinfo" + userInfo);
 
         // 4. 사용자 정보를 파싱하여 User 객체 생성
         User user = parseUserInfo(userInfo, socialLoginType, accessToken);
@@ -117,7 +112,6 @@ public class OauthService {
     public String googleApiCall(String accessToken) {
         try {
             // accessToken을 URL 인코딩
-            logger.info("Starting Google API call with access token: {}", accessToken);
             String encodedAccessToken = URLEncoder.encode(accessToken, "UTF-8");
             logger.debug("Encoded access token: {}", encodedAccessToken);
 
