@@ -3,30 +3,40 @@ package com.example.CocO.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorizeRequests ->
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // CORS 설정
+                .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/auth/google", "/auth/kakao", "/auth/naver").permitAll() // 소셜 로그인 엔드포인트 접근 허용
-                                .anyRequest().authenticated() // 나머지 요청은 인증을 요구합니다.
+                                .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // 경로 허용
+                                .anyRequest().authenticated()  // 나머지 요청은 인증 필요
                 )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login") // 로그인 페이지 URL 설정
-                                .permitAll() // 로그인 페이지는 모든 사용자에게 허용됩니다.
-                )
-                .csrf(csrf ->
-                        csrf.disable() // CSRF 보호 비활성화 (개발 중에만 사용)
-                );
+                .csrf(csrf -> csrf.disable());  // CSRF 비활성화
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:8080"));  // Swagger UI URL 허용
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }

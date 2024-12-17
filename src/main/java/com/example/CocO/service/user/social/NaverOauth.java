@@ -1,4 +1,4 @@
-package com.example.CocO.service.social;
+package com.example.CocO.service.user.social;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
