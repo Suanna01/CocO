@@ -36,7 +36,7 @@ public class OauthController {
     }
 
     @Operation(
-            summary = "소셜 로그인 콜백 처리",
+            summary = "소셜 로그인 콜백 처리 (백엔드에서 사용 X)",
             description = "사용자가 소셜 로그인 후 콜백 URL로 받은 코드를 통해 액세스 토큰을 요청합니다.",
             operationId = "handleSocialLoginCallback",
             parameters = {

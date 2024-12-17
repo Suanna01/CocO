@@ -1,10 +1,11 @@
 package com.example.CocO.service.user.social;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -44,19 +45,30 @@ public class NaverOauth implements SocialOauth {
     public String requestAccessToken(String code) {
         RestTemplate restTemplate = new RestTemplate();
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("code", code);
-        params.put("client_id", NAVER_SNS_CLIENT_ID);
-        params.put("client_secret", NAVER_SNS_CLIENT_SECRET);
-        params.put("redirect_uri", NAVER_SNS_CALLBACK_URL);
-        params.put("grant_type", "authorization_code");
-        params.put("state", "random_state_value");
+        // Header 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(NAVER_SNS_TOKEN_BASE_URL, params, String.class);
+        // 파라미터 설정 (application/x-www-form-urlencoded)
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("code", code);
+        params.add("client_id", NAVER_SNS_CLIENT_ID);
+        params.add("client_secret", NAVER_SNS_CLIENT_SECRET);
+        params.add("redirect_uri", NAVER_SNS_CALLBACK_URL);
+        params.add("grant_type", "authorization_code");
+        params.add("state", "random_state_value");
+
+        // HTTP Entity 생성
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
+
+        // 요청 전송
+        ResponseEntity<String> responseEntity =
+                restTemplate.postForEntity(NAVER_SNS_TOKEN_BASE_URL, requestEntity, String.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             return responseEntity.getBody();
         }
         return "네이버 로그인 요청 처리 실패";
     }
+
 }
