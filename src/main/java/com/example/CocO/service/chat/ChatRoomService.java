@@ -69,4 +69,19 @@ public class ChatRoomService {
                 .map(chatRoom -> new ChatRoomResponse(chatRoom.getId(), chatRoom.getName(), user.getName(),chatRoom.getCreatedAt()))
                 .collect(Collectors.toList());
     }
+
+    // 로그인한 사용자가 참여한 채팅방 목록 조회
+    public List<ChatRoomResponse> getChatRooms(User user) {
+        // 사용자가 참여한 채팅방 멤버들 조회
+        List<ChatRoomMember> chatRoomMembers = chatRoomMemberRepository.findByUser(user);
+
+        // 채팅방 리스트 추출
+        return chatRoomMembers.stream()
+                .map(chatRoomMember -> new ChatRoomResponse(
+                        chatRoomMember.getChatRoom().getId(),
+                        chatRoomMember.getChatRoom().getName(),
+                        chatRoomMember.getChatRoom().getCreatedBy().getName(),
+                        chatRoomMember.getChatRoom().getCreatedAt()))
+                .collect(Collectors.toList());
+    }
 }

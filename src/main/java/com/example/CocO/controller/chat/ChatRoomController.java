@@ -97,4 +97,24 @@ public class ChatRoomController {
         List<ChatRoomResponse> chatRooms = chatRoomService.getMyChatRooms(user);
         return ResponseEntity.ok(chatRooms);
     }
+
+
+    // 내가 참여한 채팅방 리스트 조회
+    @Operation(summary = "내가 참여한 채팅방 리스트", description = "로그인한 사용자가 참여한 채팅방 목록을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "채팅방 리스트 조회 성공"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+    })
+    @GetMapping("/list")
+    public ResponseEntity<List<ChatRoomResponse>> getUserChatRooms(
+            @AuthenticationPrincipal User user) {
+
+        if (user == null) {
+            throw new IllegalArgumentException("인증된 사용자가 아닙니다.");
+        }
+
+        // 사용자가 참여한 채팅방 목록을 서비스에서 가져옴
+        List<ChatRoomResponse> chatRooms = chatRoomService.getChatRooms(user);
+        return ResponseEntity.ok(chatRooms);
+    }
 }
