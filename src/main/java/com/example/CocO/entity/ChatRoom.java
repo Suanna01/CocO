@@ -36,4 +36,17 @@ public class ChatRoom {
 
     @OneToMany(mappedBy = "chatRoom")
     private List<ChatRoomMember> members; // ChatRoom에 속한 멤버들
+
+    @PrePersist
+    public void prePersist() {
+        // 엔티티가 처음 저장될 때 createdAt과 updatedAt을 현재 시간으로 설정
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        // 엔티티가 수정될 때 updatedAt을 현재 시간으로 설정
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
+    }
 }

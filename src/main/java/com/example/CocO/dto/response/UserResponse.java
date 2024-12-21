@@ -1,18 +1,15 @@
 package com.example.CocO.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class UserResponse {
     private String name;
-    private String accessToken;
     private String provider;
-
-    public UserResponse(String name, String accessToken, String provider) {
-        this.name = name;
-        this.accessToken = accessToken;
-        this.provider = provider;
-    }
+    private String accessToken;
+    private String jwtToken;
 }

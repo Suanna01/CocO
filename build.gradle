@@ -24,31 +24,43 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// Spring Boot 핵심 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'  // Actuator
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA
+	implementation 'org.springframework.boot:spring-boot-starter-security'  // Security
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'  // Thymeleaf 템플릿 엔진
+	implementation 'org.springframework.boot:spring-boot-starter-web:3.4.1'  // Web (Spring MVC)
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'  // Thymeleaf에서 Spring Security 통합
+
+	// Swagger UI 지원
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
-	implementation 'mysql:mysql-connector-java:8.0.33'
+	// 추가 의존성 (JWT 관련)
+	implementation 'io.jsonwebtoken:jjwt:0.12.6'  // JWT 라이브러리
 
-	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+	// 서블릿 관련 의존성 추가
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'  // javax.servlet 의존성 추가
 
-	implementation 'com.google.code.gson:gson:2.8.9'
+	// 기타 의존성
+	compileOnly 'org.projectlombok:lombok'  // Lombok (컴파일 시 사용)
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'  // 개발 도구 (자동 재시작 등)
+	annotationProcessor 'org.projectlombok:lombok'  // Lombok 어노테이션 프로세서
 
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	// 테스트 관련 의존성
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'  // Spring Boot 테스트
+	testImplementation 'org.springframework.security:spring-security-test'  // Spring Security 테스트
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'  // JUnit 런처
 
-	annotationProcessor 'org.projectlombok:lombok'
+	// 데이터베이스 연결 의존성
+	implementation 'mysql:mysql-connector-java:8.0.33'  // MySQL 커넥터
+	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'  // JPA API
+	implementation 'com.google.code.gson:gson:2.8.9'  // Gson 라이브러리
 
+	// OAuth2, WebSocket 관련 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'  // OAuth2 클라이언트
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'  // WebSocket
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()

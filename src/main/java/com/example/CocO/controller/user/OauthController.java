@@ -3,6 +3,7 @@ package com.example.CocO.controller.user;
 import com.example.CocO.dto.response.UserResponse;
 import com.example.CocO.entity.User;
 import com.example.CocO.helper.constants.SocialLoginType;
+import com.example.CocO.service.user.JwtService;
 import com.example.CocO.service.user.OauthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OauthController {
 
     private final OauthService oauthService;
+    private final JwtService jwtService;
 
     @Operation(
             summary = "소셜 로그인 프로세스 시작",
@@ -60,11 +62,14 @@ public class OauthController {
         if (user != null) {
             log.info(">> 사용자 정보 DB 저장 완료 :: {}", user.getName());
 
+            // JWT 토큰 생성
+            String jwtToken = jwtService.generateToken(user);
+
             // 세션에 사용자 정보 저장
             session.setAttribute("loginUser", user);
 
             // 로그인한 유저 정보를 response body로 반환
-            return ResponseEntity.ok(new UserResponse(user.getName(), user.getAccessToken(), user.getProvider()));
+            return ResponseEntity.ok(new UserResponse(user.getName(), user.getProvider(), user.getAccessToken(), jwtToken));
         } else {
             log.error(">> 사용자 정보 저장 실패");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 정보 저장 실패");
