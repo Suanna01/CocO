@@ -8,7 +8,9 @@ import com.example.CocO.service.chat.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/chatrooms")
 @RequiredArgsConstructor
+@Tag(name = "채팅방", description = "채팅방 개설 및 입장, 조회 API를 제공합니다.")
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;

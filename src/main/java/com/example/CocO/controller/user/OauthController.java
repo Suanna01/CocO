@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/auth")
 @Slf4j
-@Tag(name = "OAuth", description = "소셜 로그인 인증을 시작하고 콜백을 처리하는 API를 제공합니다.")
+@Tag(name = "유저", description = "소셜 로그인 인증을 시작하고 콜백을 처리하는 API를 제공합니다.")
 public class OauthController {
 
     private final OauthService oauthService;
