@@ -38,3 +38,5 @@ out/
 
 application.yaml
 src/main/resources/application.yaml
+
+bfg.jar
