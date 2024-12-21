@@ -3,9 +3,7 @@ package com.example.CocO.controller.chat;
 import com.example.CocO.dto.request.ChatRoomCreateRequest;
 import com.example.CocO.dto.request.ChatRoomJoinRequest;
 import com.example.CocO.dto.response.ChatRoomResponse;
-import com.example.CocO.entity.ChatRoom;
 import com.example.CocO.entity.User;
-import com.example.CocO.repository.user.UserRepository;
 import com.example.CocO.service.chat.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/chatrooms")
@@ -24,7 +22,6 @@ import java.util.Optional;
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
-    private final UserRepository userRepository;
 
     // 채팅방 생성
     @Operation(summary = "채팅방 생성", description = "새로운 채팅방을 생성합니다.")
@@ -80,5 +77,24 @@ public class ChatRoomController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 틀렸습니다.");
         }
+    }
+
+
+    // 로그인한 사용자가 생성한 채팅방 목록 조회
+    @Operation(summary = "내가 만든 채팅방 리스트", description = "로그인한 사용자가 생성한 채팅방 목록을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "채팅방 리스트 조회 성공"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+    })
+    @GetMapping("/mylist")
+    public ResponseEntity<List<ChatRoomResponse>> getMyChatRooms(
+            @AuthenticationPrincipal User user) {
+
+        if (user == null) {
+            throw new IllegalArgumentException("인증된 사용자가 아닙니다.");
+        }
+
+        List<ChatRoomResponse> chatRooms = chatRoomService.getMyChatRooms(user);
+        return ResponseEntity.ok(chatRooms);
     }
 }

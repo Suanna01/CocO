@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +57,16 @@ public class ChatRoomService {
                 .build();
         chatRoomMemberRepository.save(member);
         return true;
+    }
+
+    // 로그인한 사용자가 생성한 채팅방 목록 조회
+    public List<ChatRoomResponse> getMyChatRooms(User user) {
+        // 로그인한 사용자가 생성한 채팅방만 가져오기
+        List<ChatRoom> chatRooms = chatRoomRepository.findByCreatedBy(user);
+
+        // ChatRoom -> ChatRoomResponse 변환
+        return chatRooms.stream()
+                .map(chatRoom -> new ChatRoomResponse(chatRoom.getId(), chatRoom.getName(), user.getName(),chatRoom.getCreatedAt()))
+                .collect(Collectors.toList());
     }
 }
